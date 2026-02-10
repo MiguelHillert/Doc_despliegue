@@ -43,6 +43,7 @@ newgrp docker
 > **Verificación de Servicio:**
 >
 > ![Validación Docker Hola Mundo](img/pantallazo1.png)
+>
 > *Evidencia de que el servicio Docker está activo y el usuario tiene permisos correctos.*
 
 ### 2.2 Instalación de Visual Studio Code
@@ -226,18 +227,19 @@ Una vez cargado el entorno (indicado por la etiqueta verde en la esquina inferio
 
 * **Para Python:**
   Ejecutar: `whoami && python --version`
-  *Resultado esperado:* Debe mostrar el usuario **vscode** y la versión **3.12.x**.
-  ![Validación Python](img/pantallazo5.1.png)
+  >*Resultado esperado:* Debe mostrar el usuario **vscode** y la versión **3.12.x**.
+  >![Validación Python](img/pantallazo5.1.png)
 
 * **Para .NET:**
   Ejecutar: `dotnet --list-sdks`
-  *Resultado esperado:* Debe mostrar el SDK versión **9.0.x** instalado en `/usr/share/dotnet/sdk`.
-  ![Validación .NET](img/pantallazo5.2.png)
+  >*Resultado esperado:* Debe mostrar el SDK versión **9.0.x** instalado en `/usr/share/dotnet/sdk`.
+  >
+  >![Validación .NET](img/pantallazo5.2.png)
 
 * **Para Angular:**
   Ejecutar: `ng version`
-  *Resultado esperado:* Debe mostrar el logotipo de Angular CLI y la versión **19.0.0**.
-  ![Validación Angular](img/pantallazo5.3.png)
+  >*Resultado esperado:* Debe mostrar el logotipo de Angular CLI y la versión **19.0.0**.
+  >![Validación Angular](img/pantallazo5.3.png)
 
 ---
 
