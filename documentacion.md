@@ -217,11 +217,19 @@ VS Code detectará automáticamente la carpeta `.devcontainer`.
 > **[INSERTAR PANTALLAZO 4: Ventana de VS Code mostrando el proceso "Starting Dev Container" o logs de construcción]**
 
 ### Paso 3: Validación del Entorno
-Una vez cargado el entorno (indicado por la etiqueta verde en la esquina inferior izquierda), abrir la terminal integrada (`Ctrl + ñ`) y verificar:
+Una vez cargado el entorno (indicado por la etiqueta verde en la esquina inferior izquierda), abrir la terminal integrada (`Ctrl + ñ`) y verificar que las herramientas están correctamente instaladas:
 
-* **Para Python:** Ejecutar `whoami`. Debe responder **vscode**.
-* **Para .NET:** Ejecutar `whoami`. Debe responder **root** (necesario para herramientas SDK).
-* **Para Angular:** Ejecutar `whoami`. Debe responder **node** (seguridad web).
+* **Para Python:**
+  Ejecutar: `whoami && python --version`
+  *Resultado esperado:* Debe mostrar el usuario **vscode** y la versión **3.12.x**.
+
+* **Para .NET:**
+  Ejecutar: `dotnet --list-sdks`
+  *Resultado esperado:* Debe mostrar el SDK versión **9.0.x** instalado en `/usr/share/dotnet/sdk`.
+
+* **Para Angular:**
+  Ejecutar: `ng version`
+  *Resultado esperado:* Debe mostrar el logotipo de Angular CLI y la versión **19.0.0**.
 
 > **[INSERTAR PANTALLAZO 5: Captura final con la terminal mostrando los comandos de validación exitosos]**
 
