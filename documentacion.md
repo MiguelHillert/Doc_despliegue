@@ -14,7 +14,7 @@ El objetivo de esta práctica es implementar entornos de desarrollo reproducible
 Para garantizar la seguridad y el control total sobre el software, utilizaremos **imágenes propias (Custom Images)** definidas mediante `Dockerfile`. Esto nos permite:
 * Controlar las versiones exactas de las herramientas.
 * Reducir el tamaño de las imágenes (uso de versiones `slim`).
-* Implementar medidas de seguridad (usuarios no-root).
+* Implementar medidas de seguridad (usuarios no-root cuando sea posible).
 
 ---
 
@@ -137,6 +137,9 @@ USER $USERNAME
 ### 4.2 Entorno Backend (.NET) - Productividad
 **Objetivo:** Pre-instalar herramientas globales (`dotnet-ef`) en la imagen para reducir tiempos de espera.
 
+**Justificación de Usuario (`root`):**
+A diferencia de Python, en este contenedor mantenemos el usuario `root`. Esto se hace deliberadamente para facilitar la instalación de herramientas globales del SDK y la gestión de certificados SSL de desarrollo sin errores de permisos. En un entorno de producción, se cambiaría a un usuario sin privilegios por seguridad.
+
 **Archivo:** `backend-net/.devcontainer/Dockerfile`
 ```dockerfile
 FROM [mcr.microsoft.com/dotnet/sdk:9.0-bookworm-slim](https://mcr.microsoft.com/dotnet/sdk:9.0-bookworm-slim)
@@ -164,6 +167,9 @@ RUN dotnet dev-certs https --clean && dotnet dev-certs https --trust
 
 ### 4.3 Entorno Frontend (Angular) - Rendimiento
 **Objetivo:** Usar volúmenes Docker para `node_modules` para evitar la lentitud de E/S en disco.
+
+**Justificación de Usuario (`node`):**
+Aquí **NO** utilizamos root. Usamos el usuario `node` que viene pre-configurado en la imagen oficial. Al igual que en Python, esto sigue las mejores prácticas de seguridad para aplicaciones web expuestas.
 
 **Archivo:** `frontend-angular/.devcontainer/Dockerfile`
 ```dockerfile
@@ -214,8 +220,8 @@ VS Code detectará automáticamente la carpeta `.devcontainer`.
 Una vez cargado el entorno (indicado por la etiqueta verde en la esquina inferior izquierda), abrir la terminal integrada (`Ctrl + ñ`) y verificar:
 
 * **Para Python:** Ejecutar `whoami`. Debe responder **vscode**.
-* **Para .NET:** Ejecutar `dotnet --list-sdks`. Debe mostrar la versión 9.0.
-* **Para Angular:** Ejecutar `ng version`. Debe mostrar Angular CLI 19.
+* **Para .NET:** Ejecutar `whoami`. Debe responder **root** (necesario para herramientas SDK).
+* **Para Angular:** Ejecutar `whoami`. Debe responder **node** (seguridad web).
 
 > **[INSERTAR PANTALLAZO 5: Captura final con la terminal mostrando los comandos de validación exitosos]**
 
