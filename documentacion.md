@@ -8,13 +8,13 @@
 
 ## 1. Introducción
 
-[cite_start]El objetivo de esta práctica es implementar entornos de desarrollo reproducibles, aislados y seguros utilizando **Dev Containers**[cite: 6]. [cite_start]Esta tecnología soluciona el problema de "funciona en mi máquina" al desacoplar las herramientas de desarrollo del sistema operativo anfitrión[cite: 6].
+El objetivo de esta práctica es implementar entornos de desarrollo reproducibles, aislados y seguros utilizando **Dev Containers**. Esta tecnología soluciona el problema de "funciona en mi máquina" al desacoplar las herramientas de desarrollo del sistema operativo anfitrión.
 
 ### Estrategia de Implementación
-[cite_start]Para garantizar la seguridad y el control total sobre el software, utilizaremos **imágenes propias (Custom Images)** definidas mediante `Dockerfile`[cite: 24, 25]. Esto nos permite:
-* [cite_start]Controlar las versiones exactas de las herramientas[cite: 35].
+Para garantizar la seguridad y el control total sobre el software, utilizaremos **imágenes propias (Custom Images)** definidas mediante `Dockerfile`. Esto nos permite:
+* Controlar las versiones exactas de las herramientas.
 * Reducir el tamaño de las imágenes (uso de versiones `slim`).
-* [cite_start]Implementar medidas de seguridad (usuarios no-root)[cite: 116].
+* Implementar medidas de seguridad (usuarios no-root).
 
 ---
 
@@ -26,7 +26,7 @@ Dado que trabajamos en un equipo con recursos de CPU limitados, utilizaremos **D
 Se realiza una instalación limpia para evitar conflictos con virtualizadores previos (VirtualBox).
 
 ```bash
-# 1. Eliminar módulos conflictivos y limpiar
+# 1. Eliminar módulos conflictivos y limpiar dependencias rotas
 sudo apt-get remove virtualbox-dkms
 sudo dpkg --configure -a
 
@@ -40,8 +40,8 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-> **[INSERTAR PANTALLAZO 1: Terminal con `docker run hello-world`]**
-> *Evidencia de que el servicio Docker está activo y el usuario tiene permisos.*
+> **[INSERTAR PANTALLAZO 1: Terminal ejecutando `docker run hello-world`]**
+> *Evidencia de que el servicio Docker está activo y el usuario tiene permisos correctos.*
 
 ### 2.2 Instalación de Visual Studio Code
 Si el entorno no dispone de VS Code, lo instalaremos mediante paquetería `snap` (estándar en Ubuntu) para asegurar actualizaciones automáticas.
@@ -51,7 +51,7 @@ sudo snap install code --classic
 ```
 
 ### 2.3 Instalación de la Extensión "Dev Containers"
-[cite_start]Para que la arquitectura cliente-servidor funcione[cite: 10], es obligatorio instalar la extensión que conecta el IDE con el motor Docker.
+Para que la arquitectura cliente-servidor funcione, es obligatorio instalar la extensión que conecta el IDE con el motor Docker.
 
 1.  Abrir VS Code.
 2.  Ir a la barra lateral izquierda, icono de **Extensiones** (o `Ctrl+Shift+X`).
@@ -64,7 +64,7 @@ sudo snap install code --classic
 
 ## 3. Configuración del Espacio de Trabajo
 
-Para mantener el orden y asegurar que VS Code detecte las configuraciones, crearemos una estructura de carpetas específica. [cite_start]Cada proyecto debe tener su propia carpeta `.devcontainer`[cite: 21].
+Para mantener el orden y asegurar que VS Code detecte las configuraciones, crearemos una estructura de carpetas específica. Cada proyecto debe tener su propia carpeta `.devcontainer`.
 
 ### 3.1 Creación de Directorios
 Ejecuta los siguientes comandos en tu terminal para generar la estructura completa de una sola vez:
@@ -91,7 +91,7 @@ tree -a ~/practicas-devsecops
 A continuación, definimos la infraestructura como código (IaC) para cada entorno.
 
 ### 4.1 Entorno Scripting (Python) - Seguridad (DevSecOps)
-**Objetivo:** Evitar ejecutar contenedores como `root`. [cite_start]Configuramos un usuario `vscode` con UID 1000[cite: 127].
+**Objetivo:** Evitar ejecutar contenedores como `root`. Configuramos un usuario `vscode` con UID 1000.
 
 **Archivo:** `script-python/.devcontainer/Dockerfile`
 ```dockerfile
@@ -135,7 +135,7 @@ USER $USERNAME
 ```
 
 ### 4.2 Entorno Backend (.NET) - Productividad
-[cite_start]**Objetivo:** Pre-instalar herramientas globales (`dotnet-ef`) en la imagen para reducir tiempos de espera[cite: 89].
+**Objetivo:** Pre-instalar herramientas globales (`dotnet-ef`) en la imagen para reducir tiempos de espera.
 
 **Archivo:** `backend-net/.devcontainer/Dockerfile`
 ```dockerfile
@@ -163,7 +163,7 @@ RUN dotnet dev-certs https --clean && dotnet dev-certs https --trust
 ```
 
 ### 4.3 Entorno Frontend (Angular) - Rendimiento
-[cite_start]**Objetivo:** Usar volúmenes Docker para `node_modules` para evitar la lentitud de E/S en disco[cite: 106].
+**Objetivo:** Usar volúmenes Docker para `node_modules` para evitar la lentitud de E/S en disco.
 
 **Archivo:** `frontend-angular/.devcontainer/Dockerfile`
 ```dockerfile
@@ -196,7 +196,7 @@ Para iniciar cualquiera de los entornos creados, siga este procedimiento estánd
 ### Paso 1: Abrir la Carpeta del Proyecto
 1.  En VS Code, ir a `Archivo > Abrir Carpeta...` (File > Open Folder).
 2.  Seleccionar la carpeta específica del proyecto, por ejemplo: `~/practicas-devsecops/script-python`.
-    * *Nota:* No abra la carpeta raíz, abra la subcarpeta del proyecto específico.
+    * *Importante:* No abra la carpeta raíz, abra la subcarpeta del proyecto específico.
 
 ### Paso 2: Detección y Apertura en Contenedor
 VS Code detectará automáticamente la carpeta `.devcontainer`.
@@ -223,7 +223,7 @@ Una vez cargado el entorno (indicado por la etiqueta verde en la esquina inferio
 
 ## 6. Conclusión
 
-A través de esta práctica hemos logrado configurar un ciclo de vida de desarrollo moderno sobre un hardware limitado. La combinación de Docker nativo en Linux y las configuraciones optimizadas de Dev Containers (volúmenes y usuarios non-root) nos permite cumplir con los requisitos de DevSecOps sin comprometer el rendimiento del equipo local.
+A través de esta práctica hemos logrado configurar un ciclo de vida de desarrollo moderno sobre un hardware limitado. La combinación de Docker nativo en Linux y las configuraciones optimizadas de Dev Containers (volúmenes y usuarios no-root) nos permite cumplir con los requisitos de DevSecOps sin comprometer el rendimiento del equipo local.
 
 **Referencias:**
 *Informe de Investigación sobre Dev Containers y Arquitectura de Sistemas.*
