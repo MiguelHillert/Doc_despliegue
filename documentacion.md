@@ -56,11 +56,13 @@ newgrp docker
 > **Verificación del Motor Docker:**
 >
 > ![Estado del Servicio Docker](img/pantallazo1.png)
+>
 > *El motor Docker opera correctamente con permisos de usuario configurados.*
 
 > **Integración con IDE:**
 >
 > ![Extensión Dev Containers](img/pantallazo2.png)
+>
 > *Se utiliza la extensión 'Dev Containers' para habilitar la arquitectura cliente-servidor.*
 
 ---
@@ -135,7 +137,7 @@ USER $USERNAME
 
 ### 5.2 Stack Backend (.NET)
 **Enfoque:** Productividad del Desarrollador.
-Se mantiene el usuario `root` para permitir la instalación fluida de herramientas globales del SDK y la gestión de certificados de desarrollo HTTPS.
+A diferencia de Python, en este contenedor mantenemos el usuario `root`. Esto se hace deliberadamente para facilitar la instalación de herramientas globales del SDK y la gestión de certificados SSL de desarrollo sin errores de permisos. En un entorno de producción, se cambiaría a un usuario sin privilegios por seguridad.
 
 **Archivo:** `backend-net/.devcontainer/Dockerfile`
 ```dockerfile
@@ -204,9 +206,11 @@ En este entorno de desarrollo, la compilación es **orquestada localmente por VS
 > **Evidencia del Proceso de Build:**
 >
 > ![Detección de Configuración](img/pantallazo4.0.png)
+>
 > *VS Code detecta la configuración y solicita reapertura.*
 >
 > ![Logs de Compilación](img/pantallazo4.1.png)
+>
 > *Traza de ejecución del comando docker build iniciada automáticamente por el IDE.*
 
 ---
